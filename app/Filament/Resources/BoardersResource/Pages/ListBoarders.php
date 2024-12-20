@@ -23,7 +23,7 @@ class ListBoarders extends ListRecords
     {
         $tabs = [
 
-            'active' => Tab::make('Current Boarders')
+            'active' => Tab::make('Current')
                 ->modifyQueryUsing(fn($query) => $query->where('staus', 1))
                 ->badge(fn() => $this->getResource()::getEloquentQuery()->where('staus', 1)->count()),
             'all' => Tab::make('All')

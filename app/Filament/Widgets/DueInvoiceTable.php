@@ -17,7 +17,7 @@ class DueInvoiceTable extends BaseWidget
             ->heading('Unpaid Rents')
             ->query(
                 Invoice::query()
-                    ->where('due_date', '<=', now())
+                    // ->where('due_date', '<=', now())
                     ->where('status', '==', 'Due')
             )
             ->columns([

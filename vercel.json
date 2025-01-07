@@ -14,7 +14,7 @@
         "APP_ENV": "production",
         "APP_DEBUG": "true",
         "APP_URL": "https://vercel.com/yortezs-projects/bbh/H29asfw25srLvW1AoFdqzYzU58KG",
-        "APP_KEY": "base64:0CmnPIenJ7yfXBRcPVV7dzdU+HMKIWcPdDCBGvFDN/g=",
+        "APP_KEY": base64:0CmnPIenJ7yfXBRcPVV7dzdU+HMKIWcPdDCBGvFDN/g=",
 
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",

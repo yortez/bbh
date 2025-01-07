@@ -38,7 +38,13 @@ class InvoiceResource extends Resource
                     ->required()
                     ->numeric(),
                 Forms\Components\DatePicker::make('invoice_date')
-                    ->required(),
+                    ->required()
+                    ->afterStateUpdated(function ($state, Forms\Set $set) {
+                        if ($state) {
+                            $dueDate = date('Y-m-d', strtotime($state . ' + 7 days'));
+                            $set('due_date', $dueDate);
+                        }
+                    }),
                 Forms\Components\DatePicker::make('due_date')
                     ->required(),
                 Forms\Components\Select::make('status')
@@ -51,6 +57,7 @@ class InvoiceResource extends Resource
                     ->required(),
             ]);
     }
+
 
     public static function table(Table $table): Table
     {

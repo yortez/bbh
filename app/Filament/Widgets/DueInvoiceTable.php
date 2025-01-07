@@ -17,8 +17,8 @@ class DueInvoiceTable extends BaseWidget
             ->heading('Unpaid Rents')
             ->query(
                 Invoice::query()
-                    // ->where('due_date', '<=', now())
-                    ->where('status', '==', 'Due')
+                    ->where('due_date', '<=', now())
+                    ->where('status', '=', 'Due')
             )
             ->columns([
                 Tables\Columns\TextColumn::make('invoice_date')
@@ -29,7 +29,6 @@ class DueInvoiceTable extends BaseWidget
                     ->label('Boarder')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('boarders.room.number'),
-
                 Tables\Columns\TextColumn::make('amount')
                     ->label('Total Amount')
                     ->money('php')

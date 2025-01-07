@@ -13,7 +13,7 @@
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "true",
-        "APP_URL": "https://bbh-yortezs-projects.vercel.app/",
+        "APP_URL": "https://bbh-git-main-yortezs-projects.vercel.app",
         "APP_KEY": "base64:0CmnPIenJ7yfXBRcPVV7dzdU+HMKIWcPdDCBGvFDN/g=",
 
         "APP_CONFIG_CACHE": "/tmp/config.php",

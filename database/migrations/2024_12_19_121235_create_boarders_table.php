@@ -17,7 +17,13 @@ return new class extends Migration
             $table->foreignId('room_id')->constrained('rooms')->cascadeOnDelete();
             $table->string('name');
             $table->integer('age');
+            $table->string('gender');
+            $table->string('course')->nullable();
             $table->text('address');
+            $table->string('phone');
+            $table->string('contact_person');
+            $table->string('contact_person_phone');
+            $table->string('relation');
             $table->boolean('staus')->default(1)->nullable();
             $table->decimal('balance', 10, 2)->nullable()->default(0);
             $table->timestamps();

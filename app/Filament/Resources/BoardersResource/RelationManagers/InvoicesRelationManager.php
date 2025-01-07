@@ -30,7 +30,7 @@ class InvoicesRelationManager extends RelationManager
             ->recordTitleAttribute('invoice_date')
             ->columns([
                 Tables\Columns\TextColumn::make('invoice_date')
-                    ->date('Y-m-d'),
+                    ->date('F m-d'),
                 Tables\Columns\TextColumn::make('amount'),
                 Tables\Columns\TextColumn::make('status')
                     ->badge(),

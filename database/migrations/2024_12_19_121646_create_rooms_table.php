@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('number');
             $table->integer('capacity');
-            $table->decimal('rate', 10, 2)
-                ->nullable();
+            $table->integer('vacancy')->nullable();
+            $table->decimal('rate', 10, 2);
             $table->timestamps();
         });
     }

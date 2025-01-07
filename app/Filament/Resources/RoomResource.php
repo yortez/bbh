@@ -56,7 +56,8 @@ class RoomResource extends Resource
                     ->label('Vacant')
                     ->numeric()
                     ->sortable()
-                    ->getStateUsing(fn(Room $record) => $record->vacancy),
+                    ->getStateUsing(fn(Room $record) => $record->capacity - $record->boarders()->where('staus', true)->count()),
+
                 Tables\Columns\TextColumn::make('rate')
                     ->money('php')
                     ->sortable(),

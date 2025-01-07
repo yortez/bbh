@@ -7,6 +7,8 @@ use App\Filament\Resources\BoardersResource\RelationManagers;
 use App\Filament\Resources\BoardersResource\RelationManagers\InvoicesRelationManager;
 use App\Models\Boarders;
 use Filament\Forms;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -17,7 +19,6 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class BoardersResource extends Resource
 {
     protected static ?string $model = Boarders::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $recordTitleAttribute = 'name';
     public static function getNavigationBadge(): ?string
@@ -30,69 +31,76 @@ class BoardersResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\DatePicker::make('check_in')
-                    ->required(),
-                Forms\Components\Select::make('room_id')
-                    ->relationship('room', 'number')
-                    ->createOptionForm([
-                        Forms\Components\TextInput::make('number')
+
+                Group::make([
+                    Section::make('Personal Information')->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->columnSpanFull(),
+                        Forms\Components\TextInput::make('age')
+                            ->required()
+                            ->numeric(),
+                        Forms\Components\TextInput::make('gender')
                             ->required(),
-                        Forms\Components\TextInput::make('capacity')
+                        Forms\Components\TextInput::make('course'),
+                        Forms\Components\TextInput::make('phone')
+                            ->tel()
+                            ->required(),
+                        Forms\Components\Textarea::make('address')
                             ->required()
-                            ->numeric(),
-                        Forms\Components\TextInput::make('vacancy')
+                            ->columnSpanFull(),
+                    ])->columns(2),
+                    Section::make('Emergency Contact')->schema([
+                        Forms\Components\TextInput::make('contact_person')
                             ->required()
-                            ->numeric(),
-                        Forms\Components\TextInput::make('rate')
-                            ->numeric(),
-                    ])
-                    ->required(),
-                Forms\Components\TextInput::make('name')
-                    ->required(),
-                Forms\Components\TextInput::make('age')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\Select::make('gender')
-                    ->options([
-                        'male' => 'Male',
-                        'female' => 'Female',
-                        'other' => 'Other',
-                    ])
-                    ->required(),
-                Forms\Components\Textarea::make('address')
-                    ->required()
-                    ->columnSpanFull(),
-                Forms\Components\Toggle::make('staus'),
-                Forms\Components\TextInput::make('balance')
-                    ->numeric()
-                    ->default(0),
-            ]);
+                            ->columnSpanFull(),
+                        Forms\Components\TextInput::make('contact_person_phone')
+                            ->tel()
+                            ->required(),
+                        Forms\Components\TextInput::make('relation')
+                            ->required(),
+                    ])->columns(2),
+
+                ])->columnSpan(2),
+                Group::make([
+                    Section::make('Room Information')->schema([
+                        Forms\Components\DatePicker::make('check_in')
+                            ->required(),
+                        Forms\Components\Select::make('room_id')
+                            ->relationship('room', 'number')
+                            ->required(),
+                        Forms\Components\Toggle::make('staus'),
+
+                    ]),
+
+                ])->columnSpan(1),
+
+
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('check_in')
-                    ->date('F j, Y')
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('room.number')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('age')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('check_in')
+                    ->date()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('gender')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('course')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('phone')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('balance')
                     ->numeric()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                Tables\Columns\IconColumn::make('staus')
-                    ->boolean(),
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -108,9 +116,8 @@ class BoardersResource extends Resource
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
-
+                    Tables\Actions\DeleteAction::make(),
                 ]),
-
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
